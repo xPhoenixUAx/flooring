@@ -375,38 +375,6 @@
   color: var(--path-clay);
 }
 
-.path-seam__line {
-  position: absolute;
-  z-index: 1;
-  width: 1px;
-  background: currentColor;
-  opacity: 0.74;
-}
-
-.path-seam__line--left,
-.path-seam__line--right {
-  top: -4px;
-  height: 275px;
-  transform-origin: top center;
-}
-
-.path-seam__line--left {
-  left: 2px;
-  transform: rotate(-22deg);
-}
-
-.path-seam__line--right {
-  right: 2px;
-  transform: rotate(22deg);
-}
-
-.path-seam__line--stem {
-  top: 254px;
-  bottom: 0;
-  left: 50%;
-  height: auto;
-}
-
 .path-seam__label {
   position: absolute;
   z-index: 2;
@@ -717,23 +685,6 @@
 
   .path-seam__label {
     display: none;
-  }
-
-  .path-seam__line--left,
-  .path-seam__line--right {
-    height: 260px;
-  }
-
-  .path-seam__line--left {
-    transform: rotate(-15deg);
-  }
-
-  .path-seam__line--right {
-    transform: rotate(15deg);
-  }
-
-  .path-seam__line--stem {
-    top: 251px;
   }
 
   .project-paths__help {
