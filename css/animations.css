@@ -1,0 +1,71 @@
+@media (prefers-reduced-motion: no-preference) {
+  .is-ready .hero-kicker,
+  .is-ready .hero h1,
+  .is-ready .hero-support,
+  .is-ready .hero-actions,
+  .is-ready .hero-trust {
+    animation: hero-copy-in 760ms var(--ease-out) both;
+  }
+
+  .is-ready .hero h1 { animation-delay: 70ms; }
+  .is-ready .hero-support { animation-delay: 140ms; }
+  .is-ready .hero-actions { animation-delay: 210ms; }
+  .is-ready .hero-trust { animation-delay: 280ms; }
+
+  .is-ready .hero-picture img {
+    animation: hero-room-in 1100ms var(--ease-out) both;
+  }
+
+  .is-ready .floor-system-asset {
+    animation: floor-system-in 1000ms 180ms var(--ease-out) both;
+  }
+
+  .is-ready .floor-system-labels li,
+  .is-ready .floor-measure,
+  .is-ready .hero-coordinate {
+    animation: floor-detail-in 620ms var(--ease-out) both;
+  }
+
+  .is-ready .floor-system-labels li:nth-child(1) { animation-delay: 480ms; }
+  .is-ready .floor-system-labels li:nth-child(2) { animation-delay: 540ms; }
+  .is-ready .floor-system-labels li:nth-child(3) { animation-delay: 600ms; }
+  .is-ready .floor-system-labels li:nth-child(4) { animation-delay: 660ms; }
+  .is-ready .floor-system-labels li:nth-child(5) { animation-delay: 720ms; }
+  .is-ready .floor-measure { animation-delay: 570ms; }
+  .is-ready .hero-coordinate { animation-delay: 690ms; }
+
+  .is-ready .material-item {
+    animation: material-in 680ms var(--ease-out) both;
+  }
+
+  .is-ready .material-item:nth-child(1) { animation-delay: 380ms; }
+  .is-ready .material-item:nth-child(2) { animation-delay: 440ms; }
+  .is-ready .material-item:nth-child(3) { animation-delay: 500ms; }
+  .is-ready .material-item:nth-child(4) { animation-delay: 560ms; }
+  .is-ready .material-item:nth-child(5) { animation-delay: 620ms; }
+
+  @keyframes hero-copy-in {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes hero-room-in {
+    from { opacity: 0; transform: scale(1.045); }
+    to { opacity: 1; transform: scale(1.015); }
+  }
+
+  @keyframes floor-system-in {
+    from { opacity: 0; transform: translate3d(0, 28px, 0) scale(0.97); }
+    to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  }
+
+  @keyframes floor-detail-in {
+    from { opacity: 0; transform: translateX(12px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes material-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
