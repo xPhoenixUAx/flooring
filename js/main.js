@@ -3,6 +3,10 @@
   "use strict";
 
   const config = window.SITE_CONFIG || {};
+  const company = config.company || {};
+  const brand = config.brand || {};
+  const contact = config.contact || {};
+  const disclaimer = config.disclaimer || {};
   const body = document.body;
   const header = document.querySelector("[data-site-header]");
   const menuToggle = document.querySelector("[data-menu-toggle]");
@@ -16,8 +20,21 @@
   const cookieKey = "flooring-match-cookie-choice";
 
   const setConfigContent = () => {
+    const siteTitle = config.pageTitle || company.name || "Flooring Match";
+    const pageTitles = {
+      home: `${siteTitle} | Find the right flooring professional`,
+      installation: `Floor Installation & Replacement | ${siteTitle}`,
+      repair: `Floor Repair & Refinishing | ${siteTitle}`,
+      privacy: `Privacy Policy | ${siteTitle}`,
+      terms: `Terms of Service | ${siteTitle}`,
+      cookies: `Cookie Policy | ${siteTitle}`
+    };
+    document.title = pageTitles[body.dataset.page] || siteTitle;
+    const socialTitle = document.querySelector('meta[property="og:title"]');
+    if (socialTitle) socialTitle.content = document.title;
+
     document.querySelectorAll("[data-brand-name]").forEach((element) => {
-      element.textContent = config.brandName || "Flooring Match";
+      element.textContent = company.name || "Flooring Match";
     });
 
     document.querySelectorAll("[data-current-year]").forEach((element) => {
@@ -25,24 +42,18 @@
     });
 
     document.querySelectorAll("[data-copyright-year]").forEach((element) => {
-      const currentYear = new Date().getFullYear();
-      const startYear = Number(config.copyrightStartYear) || currentYear;
-      element.textContent = startYear < currentYear ? `${startYear}–${currentYear}` : String(currentYear);
+      element.textContent = String(new Date().getFullYear());
     });
 
     document.querySelectorAll("[data-global-disclaimer]").forEach((element) => {
-      element.textContent = config.globalDisclaimer || "";
+      element.textContent = disclaimer.full || "";
     });
 
     document.querySelectorAll("[data-footer-text]").forEach((element) => {
-      element.textContent = config.footerText || "";
+      element.textContent = brand.descriptor || element.textContent;
     });
 
-    document.querySelectorAll("[data-legal-updated]").forEach((element) => {
-      element.textContent = config.legalLastUpdated || "";
-    });
-
-    const publicEmail = config.corporateEmail || "";
+    const publicEmail = contact.email || "";
     document.querySelectorAll("[data-corporate-email-group]").forEach((element) => {
       element.hidden = !publicEmail;
     });

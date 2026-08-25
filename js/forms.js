@@ -252,8 +252,7 @@
       if (status) status.textContent = "";
 
       try {
-        const endpoint = window.SITE_CONFIG?.formEndpoint || form.action;
-        const response = await fetch(endpoint, {
+        const response = await fetch(form.action, {
           method: "POST",
           body: new FormData(form),
           headers: { Accept: "application/json" }

@@ -89,15 +89,28 @@ function in_allowed(string $value, array $allowed, bool $optional = false): bool
     return ($optional && $value === '') || in_array($value, $allowed, true);
 }
 
-function config_string(string $source, string $key): string
+function config_data(string $source): array
 {
-    $escapedKey = preg_quote($key, '/');
-    $pattern = '/(?:^|[\s,{])' . $escapedKey . '\s*:\s*(["\'])(.*?)\1/s';
+    $pattern = '~\/\*\s*SITE_CONFIG_JSON_START\s*\*\/\s*window\.SITE_CONFIG\s*=\s*(\{.*\})\s*;\s*\/\*\s*SITE_CONFIG_JSON_END\s*\*\/~s';
     if (!preg_match($pattern, $source, $match)) {
-        return '';
+        return [];
     }
 
-    return clean_text(stripcslashes($match[2]));
+    $config = json_decode($match[1], true);
+    return is_array($config) ? $config : [];
+}
+
+function config_value(array $config, string ...$path): string
+{
+    $value = $config;
+    foreach ($path as $key) {
+        if (!is_array($value) || !array_key_exists($key, $value)) {
+            return '';
+        }
+        $value = $value[$key];
+    }
+
+    return is_string($value) ? clean_text($value) : '';
 }
 
 function same_origin_is_plausible(string $configuredUrl): bool
@@ -166,10 +179,15 @@ if (!is_string($configSource)) {
     respond(503, false, SERVER_ERROR);
 }
 
-$siteName = config_string($configSource, 'brandName') ?: 'Flooring Match';
-$recipient = config_string($configSource, 'corporateEmail');
-$websiteUrl = config_string($configSource, 'websiteUrl');
-$configuredFrom = config_string($configSource, 'formFromEmail');
+$config = config_data($configSource);
+if ($config === []) {
+    respond(503, false, SERVER_ERROR);
+}
+
+$siteName = config_value($config, 'company', 'name') ?: 'Flooring Match';
+$recipient = config_value($config, 'contact', 'email');
+$websiteUrl = config_value($config, 'contact', 'website');
+$configuredFrom = '';
 
 if (!same_origin_is_plausible($websiteUrl)) {
     respond(403, false, SERVER_ERROR);
